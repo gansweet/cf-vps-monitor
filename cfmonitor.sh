@@ -40,10 +40,18 @@ print_message() {
     echo -e "${color}${message}${NC}"
 }
 
-# === 目录初始化修复版 ===
-# 优先使用容器内可写目录
+# === 自动检测容器可写路径，修复 BASE_DIR 问题 ===
+# 若 $HOME 未定义或无写入权限，优先用 /app，再退到 /tmp
 if [ -z "$HOME" ] || [ ! -w "$HOME" ]; then
-    export HOME="/app"
+    if [ -d "/app" ] && [ -w "/app" ]; then
+        export HOME="/app"
+    elif [ -d "/tmp" ] && [ -w "/tmp" ]; then
+        export HOME="/tmp"
+    else
+        echo "错误: 无法找到可写目录，当前用户: $(whoami)"
+        echo "当前目录: $(pwd)"
+        exit 1
+    fi
 fi
 
 BASE_DIR="${HOME}/.cf-vps-monitor"
@@ -54,6 +62,7 @@ mkdir -p "$BASE_DIR/logs" "$BASE_DIR/tmp" "$BASE_DIR/config" || {
 }
 
 LOG_FILE="$BASE_DIR/logs/monitor.log"
+
 
 
 # 日志函数（环境适配）
@@ -3256,3 +3265,4 @@ if [[ "${BASH_SOURCE[0]}" == "${0}" ]]; then
     main "$@"
 
 fi
+
