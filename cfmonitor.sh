@@ -3266,5 +3266,3 @@ if [[ "${BASH_SOURCE[0]}" == "${0}" ]]; then
 
 fi
 
-echo "监控后台服务已启动，容器保持运行中..."
-tail -f $HOME/.cf-vps-monitor/logs/monitor.log
