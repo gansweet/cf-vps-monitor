@@ -3,6 +3,7 @@ FROM debian:bookworm-slim
 RUN apt-get update && apt-get install -y curl jq procps net-tools iproute2 bc dos2unix && \
     apt-get clean && rm -rf /var/lib/apt/lists/*
 
+ENV HOME=/app
 WORKDIR /app
 COPY cfmonitor.sh /app/cfmonitor.sh
 COPY entrypoint.sh /app/entrypoint.sh
