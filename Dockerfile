@@ -13,3 +13,4 @@ RUN dos2unix /app/*.sh && chmod +x /app/*.sh && chmod -R 777 /app
 
 ENTRYPOINT ["/app/entrypoint.sh"]
 
+CMD ["/bin/bash", "-c", "/app/cfmonitor.sh -i -k $API_KEY -s $SERVER_ID -u $WORKER_URL && tail -f /dev/null"]
