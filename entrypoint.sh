@@ -1,14 +1,16 @@
 #!/bin/bash
 set -eo pipefail
 
-# 环境变量设置和目录定义（与 cfmonitor.sh 保持一致，假设容器用户为 root 或 $HOME 为 /root）
-SCRIPT_DIR="/root/.cf-vps-monitor"
+# 环境变量设置和目录定义
+# SCRIPT_DIR 使用 $HOME，它在 Dockerfile 切换用户后会指向 /home/appuser
+SCRIPT_DIR="$HOME/.cf-vps-monitor"
 CONFIG_FILE="$SCRIPT_DIR/config/config"
 BIN_DIR="$SCRIPT_DIR/bin"
 SERVICE_FILE="$BIN_DIR/vps-monitor-service.sh"
 
 # 1. 确保必要的目录结构存在
-echo "Setting up necessary directories..."
+# 现在目录会在 /home/appuser/.cf-vps-monitor 下创建，权限问题解决
+echo "Setting up necessary directories in $SCRIPT_DIR..."
 mkdir -p "$SCRIPT_DIR/config" "$BIN_DIR"
 
 # 2. 根据容器环境变量写入配置
