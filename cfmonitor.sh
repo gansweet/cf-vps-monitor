@@ -40,6 +40,22 @@ print_message() {
     echo -e "${color}${message}${NC}"
 }
 
+# === 目录初始化修复版 ===
+# 优先使用容器内可写目录
+if [ -z "$HOME" ] || [ ! -w "$HOME" ]; then
+    export HOME="/app"
+fi
+
+BASE_DIR="${HOME}/.cf-vps-monitor"
+
+mkdir -p "$BASE_DIR/logs" "$BASE_DIR/tmp" "$BASE_DIR/config" || {
+    echo "错误: 无法创建目录结构 ($BASE_DIR)"
+    exit 1
+}
+
+LOG_FILE="$BASE_DIR/logs/monitor.log"
+
+
 # 日志函数（环境适配）
 log() {
     local message="$1"
@@ -3238,4 +3254,5 @@ fi
 # 脚本入口点
 if [[ "${BASH_SOURCE[0]}" == "${0}" ]]; then
     main "$@"
+
 fi
