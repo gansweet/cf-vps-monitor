@@ -8,9 +8,9 @@ echo "加载环境变量..."
 : "${API_KEY:?请设置 API_KEY 环境变量}"
 : "${SERVER_ID:?请设置 SERVER_ID 环境变量}"
 : "${WORKER_URL:?请设置 WORKER_URL 环境变量}"
-: "${MONITOR_INTERVAL:=300}"
+: "${$INTERVAL:=300}"
 
-echo "监控间隔: $MONITOR_INTERVAL 秒"
+echo "监控间隔: $INTERVAL 秒"
 echo "执行命令: /app/cfmonitor.sh -i -k ${API_KEY} -s ${SERVER_ID} -u ${WORKER_URL}"
 echo "--------------------------------------------"
 
@@ -21,4 +21,6 @@ if [ ! -x /app/cfmonitor.sh ]; then
   exit 1
 fi
 
-exec /app/cfmonitor.sh -i -k "${API_KEY}" -s "${SERVER_ID}" -u "${WORKER_URL}"
+exec /app/cfmonitor.sh -i "${INTERVAL}" -k "${API_KEY}" -s "${SERVER_ID}" -u "${WORKER_URL}"
+# 保持前台运行（防止容器退出）
+tail -f /dev/null
