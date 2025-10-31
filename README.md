@@ -171,9 +171,9 @@ curl -O https://raw.githubusercontent.com/kadidalax/cf-vps-monitor/main/cf-vps-m
 
 ```
 - 变量名,描述,示例值,对应 cfmonitor.sh 默认项
-- WORKER_URL,必需。 Cloudflare Worker 的 URL 地址。,https://my-monitor.yourdomain.com/,DEFAULT_WORKER_URL
-- SERVER_ID,必需。 当前 VPS/服务器的唯一标识符。,my-vps-01,DEFAULT_SERVER_ID
-- API_KEY,必需。 用于授权的 API Key 或密钥。,your_secret_api_key_12345,DEFAULT_API_KEY
-- INTERVAL,监控数据上报的间隔时间（秒）。,30,DEFAULT_INTERVAL
+- WORKER_URL,必需，数据上报接口。 Cloudflare Worker 的 URL 地址。,https://my-monitor.yourdomain.com/,DEFAULT_WORKER_URL
+- SERVER_ID,必需，节点标识。 当前 VPS/服务器的唯一标识符。,my-vps-01,DEFAULT_SERVER_ID
+- API_KEY,必需，授权密钥。 用于授权的 API Key 或密钥。,your_secret_api_key_12345,DEFAULT_API_KEY
+- INTERVAL 或 MONITOR_INTERVAL   检测间隔秒 300
 
 
