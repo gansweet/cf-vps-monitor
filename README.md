@@ -186,4 +186,5 @@ curl -O https://raw.githubusercontent.com/kadidalax/cf-vps-monitor/main/cf-vps-m
 
  - -u, --worker-url URL    Worker地址
 
+### 有些容器启动脚本本身执行完就退出了，而后台进程在容器里独立运行，但容器管理平台会认为主进程已经结束，所以状态可能一直是 starting 或立即 exited。事实已经在日志守护。正常的，就是前台无法监控到。
 
