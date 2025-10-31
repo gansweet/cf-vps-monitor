@@ -1,7 +1,7 @@
 FROM debian:12-slim
 
 WORKDIR /app
-
+ENV HOME=/app
 RUN apt-get update && apt-get install -y curl bash procps iproute2 cron && rm -rf /var/lib/apt/lists/*
 
 COPY cfmonitor.sh /app/cfmonitor.sh
