@@ -13,19 +13,20 @@ RUN apt-get update && \
 # 1. 创建一个新的非特权用户和用户组
 RUN groupadd -r appgroup && useradd -r -g appgroup appuser
 
-# 2. 设置工作目录为 appuser 的主目录
-# 容器内的 HOME 变量将指向 /home/appuser
-WORKDIR /home/appuser
+# 2. 创建一个可供非特权用户写入的目录，并设置所有权
+RUN mkdir -p /app/data && chown -R appuser:appgroup /app
 
-# 3. 复制文件并设置所有权给 appuser
+# 3. 设置工作目录为 /app
+WORKDIR /app
+
+# 4. 复制文件并设置权限
 COPY cfmonitor.sh /usr/local/bin/cfmonitor.sh
 COPY entrypoint.sh /usr/local/bin/entrypoint.sh
 RUN chown appuser:appgroup /usr/local/bin/cfmonitor.sh /usr/local/bin/entrypoint.sh
-
-# 4. 赋予执行权限
 RUN chmod +x /usr/local/bin/cfmonitor.sh /usr/local/bin/entrypoint.sh
 
-# 5. 切换到非特权用户运行，解决权限问题
+# 5. 切换到非特权用户运行
+# 尽管 USER appuser，但我们在 entrypoint 中会使用绝对路径 /app/data
 USER appuser
 
 ENTRYPOINT ["/usr/local/bin/entrypoint.sh"]
