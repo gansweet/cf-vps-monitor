@@ -10,4 +10,4 @@ echo "加载环境变量..."
 
 echo "监控间隔: $MONITOR_INTERVAL 秒"
 echo "开始执行主程序..."
-exec /app/cfmonitor.sh
+exec /app/cfmonitor.sh -i -k ${API_KEY:-}  -s ${SERVER_ID:-} -u ${WORKER_URL:-} 
