@@ -29,5 +29,9 @@ RUN chmod +x /usr/local/bin/cfmonitor.sh /usr/local/bin/entrypoint.sh
 # 尽管 USER appuser，但我们在 entrypoint 中会使用绝对路径 /app/data
 USER appuser
 
+# 暴露常用端口（可自定义）
+EXPOSE 7860 80 443 8080 8443 2053 2083 2087 2096 3000
+
 ENTRYPOINT ["/usr/local/bin/entrypoint.sh"]
+
 CMD ["run"]
