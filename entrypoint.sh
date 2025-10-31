@@ -1,15 +1,16 @@
 #!/bin/bash
 set -eo pipefail
 
-# 环境变量设置和目录定义
-# SCRIPT_DIR 使用 $HOME，它在 Dockerfile 切换用户后会指向 /home/appuser
-SCRIPT_DIR="$HOME/.cf-vps-monitor"
+# 明确设置 SCRIPT_DIR 为一个绝对路径
+# 这个路径在 Dockerfile 中已被创建，并授权给 appuser 写入。
+SCRIPT_DIR="/app/data/.cf-vps-monitor"
+
 CONFIG_FILE="$SCRIPT_DIR/config/config"
 BIN_DIR="$SCRIPT_DIR/bin"
 SERVICE_FILE="$BIN_DIR/vps-monitor-service.sh"
 
 # 1. 确保必要的目录结构存在
-# 现在目录会在 /home/appuser/.cf-vps-monitor 下创建，权限问题解决
+# 现在路径为 /app/data/.cf-vps-monitor，非特权用户 appuser 有权限写入。
 echo "Setting up necessary directories in $SCRIPT_DIR..."
 mkdir -p "$SCRIPT_DIR/config" "$BIN_DIR"
 
