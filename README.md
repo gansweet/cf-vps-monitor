@@ -164,8 +164,9 @@ curl -O https://raw.githubusercontent.com/kadidalax/cf-vps-monitor/main/cf-vps-m
 *   **错误处理:** 如果面板或 Agent 遇到问题，可以检查 Worker 的日志（在 Cloudflare 控制面板 Worker 页面）和 Agent 的日志。
 *   以上所有内容和代码均为AI生成，出现问题请直接拿着代码找AI吧。
 
-## Docker Deploy容器所需的环境变量
- - 镜像 ghcr.io/gansweet/cf-vps-monitor:latest
+  
+   ## Docker Deploy容器所需的环境变量
+    - 镜像 ghcr.io/gansweet/cf-vps-monitor:latest
 ---
 - 在容器平台的变量界面中填写以下关键环境变量。这些变量会被 entrypoint.sh 读取并用于生成配置文件：
 
@@ -175,6 +176,7 @@ curl -O https://raw.githubusercontent.com/kadidalax/cf-vps-monitor/main/cf-vps-m
 - SERVER_ID,必需，节点标识。 当前 VPS/服务器的唯一标识符。,my-vps-01,DEFAULT_SERVER_ID
 - API_KEY,必需，授权密钥。 用于授权的 API Key 或密钥。,your_secret_api_key_12345,DEFAULT_API_KEY
 - INTERVAL  检测间隔秒 上报间隔会自动从服务器获取，无需手动设置
+```
 
 ---
 ### 一键安装参数:
