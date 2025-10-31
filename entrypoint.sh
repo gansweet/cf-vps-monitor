@@ -2,7 +2,6 @@
 set -eo pipefail
 
 # 明确设置 SCRIPT_DIR 为一个绝对路径
-# 这个路径在 Dockerfile 中已被创建，并授权给 appuser 写入。
 SCRIPT_DIR="/app/data/.cf-vps-monitor"
 
 CONFIG_FILE="$SCRIPT_DIR/config/config"
@@ -10,8 +9,8 @@ BIN_DIR="$SCRIPT_DIR/bin"
 SERVICE_FILE="$BIN_DIR/vps-monitor-service.sh"
 
 # 1. 确保必要的目录结构存在
-# 现在路径为 /app/data/.cf-vps-monitor，非特权用户 appuser 有权限写入。
 echo "Setting up necessary directories in $SCRIPT_DIR..."
+# 此时，appuser 拥有 /app 的写入权限，可以顺利创建 /app/data 和 /app/data/.cf-vps-monitor
 mkdir -p "$SCRIPT_DIR/config" "$BIN_DIR"
 
 # 2. 根据容器环境变量写入配置
