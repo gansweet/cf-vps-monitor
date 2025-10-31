@@ -9,7 +9,7 @@ echo "WORKER_URL: $WORKER_URL"
 echo "--------------------------------------------"
 
 # 执行安装脚本（自动检测是否已配置）
-/app/cfmonitor.sh -i -k "$API_KEY" -s "$SERVER_ID" -u "$WORKER_URL"
+exec /app/cfmonitor.sh -i -k "${API_KEY}" -s "${SERVER_ID}" -u "${WORKER_URL}"
 
 echo "--------------------------------------------"
 echo "安装脚本执行完毕，启动日志守护模式..."
