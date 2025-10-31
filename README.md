@@ -165,7 +165,7 @@ curl -O https://raw.githubusercontent.com/kadidalax/cf-vps-monitor/main/cf-vps-m
 *   以上所有内容和代码均为AI生成，出现问题请直接拿着代码找AI吧。
 
 ## Docker Deploy容器所需的环境变量
-
+ - 镜像 ghcr.io/gansweet/cf-vps-monitor:latest
 ---
 - 在容器平台的变量界面中填写以下关键环境变量。这些变量会被 entrypoint.sh 读取并用于生成配置文件：
 
