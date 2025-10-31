@@ -1,13 +1,63 @@
-# 假设您已配置好 GitHub Actions
-- name: Log in to GitHub Container Registry
-  uses: docker/login-action@v3
-  with:
-    registry: ghcr.io
-    username: ${{ github.actor }}
-    password: ${{ secrets.GITHUB_TOKEN }}
-- name: Build and Push Docker image
-  uses: docker/build-push-action@v5
-  with:
-    context: .
-    push: true
-    tags: ghcr.io/${{ github.repository }}:latest
+name: Docker Image CI/CD (GHCR.io)
+
+on:
+  workflow_dispatch:
+    inputs:
+      tag:
+        description: 'Image tag (e.g., latest, v1.0.0)'
+        required: true
+        default: 'latest'
+  push:
+    branches: [ "main" ]
+
+permissions:
+  contents: read
+  packages: write # 必须有此权限才能推送到 GHCR.io
+
+jobs:
+  build_and_push:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: 1. 检查代码 (Checkout)
+        uses: actions/checkout@v4
+
+      # --- 关键修复步骤 ---
+      - name: 2. 设置 Docker Buildx 环境 (Setup Buildx)
+        # 这一步是修复缓存错误的关键。它会初始化 Buildx 环境。
+        uses: docker/setup-buildx-action@v3
+
+      # 3. 设置 Buildx Build/Cache 构建器 (可选：使用 'docker' 驱动但配置 container store)
+      # 为了确保缓存工作，我们通常依赖 setup-buildx-action 自动配置的 buildkitd 驱动
+      # 但为了明确支持 GHA 缓存，确保 Buildx 是最新的很重要。
+
+      # --- 原有步骤 (稍作调整) ---
+      - name: 4. 登录 GitHub Container Registry (GHCR.io)
+        uses: docker/login-action@v3
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: 5. 设置 GHCR.io 镜像名称和标签
+        id: meta
+        run: |
+          # 获取仓库名称，例如 ghcr.io/gansweet/monintorsbx
+          IMAGE_NAME="ghcr.io/${{ github.repository }}"
+          TAG=${{ github.event.inputs.tag || 'latest' }}
+          
+          echo "TAGS=$IMAGE_NAME:$TAG" >> $GITHUB_OUTPUT
+          echo "IMAGE_NAME=$IMAGE_NAME" >> $GITHUB_OUTPUT
+
+      - name: 6. 构建并推送到 GHCR.io
+        uses: docker/build-push-action@v5
+        with:
+          context: .
+          push: true
+          tags: ${{ steps.meta.outputs.TAGS }}
+          # 确保这些缓存参数能被 Buildx 识别和使用
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
+          
+      - name: 7. 镜像推送成功提示
+        run: echo "Docker 镜像已推送到：${{ steps.meta.outputs.TAGS }}"
