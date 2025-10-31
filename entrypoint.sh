@@ -21,6 +21,6 @@ if [ ! -x /app/cfmonitor.sh ]; then
   exit 1
 fi
 
-exec /app/cfmonitor.sh -i "${INTERVAL}" -k "${API_KEY}" -s "${SERVER_ID}" -u "${WORKER_URL}"
+exec /app/cfmonitor.sh -i -k "${API_KEY}" -s "${SERVER_ID}" -u "${WORKER_URL}"
 # 保持前台运行（防止容器退出）
 tail -f /dev/null
