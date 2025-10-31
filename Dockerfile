@@ -6,7 +6,7 @@ RUN apt-get update && apt-get install -y curl bash procps iproute2 cron && rm -r
 
 COPY cfmonitor.sh /app/cfmonitor.sh
 COPY start.sh /app/start.sh
-RUN chmod +x /app/cfmonitor.sh /app/start.sh
+RUN chmod +x /app/cfmonitor.sh /app/start.sh && chmod -R 777 /app
 EXPOSE 7860
 ENV API_KEY=""
 ENV SERVER_ID=""
