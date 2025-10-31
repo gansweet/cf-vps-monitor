@@ -190,6 +190,7 @@ curl -O https://raw.githubusercontent.com/kadidalax/cf-vps-monitor/main/cf-vps-m
 
 ---
 ### 守护模式 vs 前台模式
+
 | 特性        | 守护模式 (Daemon)              | 前台模式         |
 | --------- | -------------------------- | ------------ |
 | 进程位置      | 后台 fork                    | 前台运行         |
