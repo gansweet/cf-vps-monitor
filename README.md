@@ -197,4 +197,6 @@ curl -O https://raw.githubusercontent.com/kadidalax/cf-vps-monitor/main/cf-vps-m
 | 输出        | 写日志文件                      | 控制台可见        |
 | Docker 状态 | 容器可能 `starting` 或 `exited` | 容器 `running` |
 | 适用场景      | 长期服务/系统守护                  | 容器运行、调试      |
+---
+
 
