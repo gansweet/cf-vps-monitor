@@ -3,7 +3,7 @@ set -e
 
 echo "===== 启动 cf-vps-monitor 容器 ====="
 echo "加载环境变量..."
-echo "API_KEY: ${API_KEY:0:6}..."
+echo "API_KEY: $API_KEY"
 echo "SERVER_ID: $SERVER_ID"
 echo "WORKER_URL: $WORKER_URL"
 echo "--------------------------------------------"
