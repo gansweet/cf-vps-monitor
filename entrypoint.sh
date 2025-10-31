@@ -8,7 +8,7 @@ echo "加载环境变量..."
 : "${API_KEY:?请设置 API_KEY 环境变量}"
 : "${SERVER_ID:?请设置 SERVER_ID 环境变量}"
 : "${WORKER_URL:?请设置 WORKER_URL 环境变量}"
-: "${$INTERVAL:?请设置 INTERVAL 环境变量}"
+: "${INTERVAL:?请设置 INTERVAL 环境变量}"
 
 echo "监控间隔: $INTERVAL 秒"
 echo "执行命令: /app/cfmonitor.sh -i -k ${API_KEY} -s ${SERVER_ID} -u ${WORKER_URL}"
